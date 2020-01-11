@@ -18,9 +18,8 @@ LinkedList::~LinkedList() {
     }
 }
 
-void LinkedList::Add(char direction, int number) {
+void LinkedList::Add(int number) {
     Node* node = new Node();
-    node->direction = direction;
     node->number = number;
 
     if (first == nullptr) {
@@ -40,12 +39,12 @@ void LinkedList::Add(char direction, int number) {
     }
 }
 
-void LinkedList::DeleteValue(char direction, int number) {
+void LinkedList::DeleteValue(int number) {
     Node* node = first;
     Node* prev = nullptr;
 
     while (node != nullptr) {
-        if (node->direction == direction && node->number == number)
+        if (node->number == number)
             break;
 
         prev = node;
@@ -88,15 +87,14 @@ void LinkedList::DeleteNode(int indexToDelete) {
     }
 }
 
-void LinkedList::InsertAfterValue(char direction, int number, char prevDirection, int prevNumber) {
+void LinkedList::InsertAfterValue(int number, int prevNumber) {
     Node* node = new Node();
-    node->direction = direction;
     node->number = number;
 
     Node* prev = first;
 
     while (prev != nullptr) {
-        if (prev->direction == prevDirection && prev->number == prevNumber)
+        if (prev->number == prevNumber)
             break;
 
         prev = prev->next;
@@ -111,20 +109,19 @@ void LinkedList::InsertAfterValue(char direction, int number, char prevDirection
             prev->next = node;
         }
         else {
-            Add(direction, number);
+            Add(number);
         }
     }
 }
 
-void LinkedList::InsertBeforeNode(int nodeIndex, char direction, int number) {
+void LinkedList::InsertBeforeNode(int nodeIndex, int number) {
     int index = -1;
 
     Node* newNode = new Node();
-    newNode->direction = direction;
     newNode->number = number;
 
     Node* node = first;
-    Node* prev = first;
+    Node* prev = nullptr;
 
     while (node != nullptr) {
         index++;
@@ -145,8 +142,25 @@ void LinkedList::InsertBeforeNode(int nodeIndex, char direction, int number) {
             newNode->next = node;
         }
         else {
-            Add(direction, number);
+            Add(number);
         }
+    }
+}
+
+void LinkedList::ChangeValue(int nodeIndex, int newNumber) {
+    int index = -1;
+
+    Node* node = first;
+
+    while (node != nullptr) {
+        index++;
+
+        if (index == nodeIndex) {
+            node->number = newNumber;
+            break;
+        }
+
+        node = node->next;
     }
 }
 
@@ -154,7 +168,7 @@ ostream& operator<<(ostream& output, LinkedList& list) {
     Node* currNode = list.first;
 
     while (currNode != nullptr) {
-        output << "Combination = " << currNode->direction << currNode->number << endl;
+        output << currNode->number << endl;
 
         currNode = currNode->next;
     }

@@ -8,12 +8,11 @@
 
 class Node {
 public:
-    int direction;
     int number;
 
     Node *next;
 
-    Node() : next(nullptr), direction('R'), number(-1) {}
+    Node() : next(nullptr), number(-1) {}
 };
 
 

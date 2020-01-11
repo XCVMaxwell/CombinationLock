@@ -6,23 +6,24 @@
 using namespace std;
 
 class LinkedList {
-private:
-    Node* first;
-
 public:
+
+    Node* first;
     LinkedList();
 
     virtual ~LinkedList();
 
-    void Add(char direction, int number);
+    void Add(int number);
 
-    void DeleteValue(char direction, int number);
+    void DeleteValue(int number);
 
     void DeleteNode(int indexToDelete);
 
-    void InsertAfterValue(char direction, int number, char prevDirection, int prevNumber);
+    void InsertAfterValue(int number, int prevNumber);
 
-    void InsertBeforeNode(int nodeIndex, char direction, int number);
+    void InsertBeforeNode(int nodeIndex, int number);
+
+    void ChangeValue(int nodeIndex, int newNumber);
 
     friend ostream& operator<<(ostream& output, LinkedList& list);
 };
