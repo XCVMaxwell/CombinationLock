@@ -7,8 +7,8 @@ using namespace std;
 
 class LinkedList {
 public:
-
     Node* first;
+
     LinkedList();
 
     virtual ~LinkedList();

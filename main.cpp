@@ -80,6 +80,9 @@ void writeToFile(LinkedList& list, const string& fileName) {
     file.close();
 }
 
+// Command vs. Sub-command.
+// Command - Q, E, G, S, D and R are considered commands.
+// Sub-command is whatever comes after a command. In this case that's the the combination number.
 int main(int argc, char* argv[]) {
     if (argc == 2) {
         string fileName = argv[1];
