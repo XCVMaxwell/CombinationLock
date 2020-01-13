@@ -167,8 +167,13 @@ void LinkedList::ChangeValue(int nodeIndex, int newNumber) {
 ostream& operator<<(ostream& output, LinkedList& list) {
     Node* currNode = list.first;
 
+    int index = 0;
     while (currNode != nullptr) {
-        output << currNode->number << endl;
+        index++;
+
+        string direction = (index % 2 == 1) ? "R" : "L";
+
+        output << direction << currNode->number << " ";
 
         currNode = currNode->next;
     }

@@ -1,12 +1,13 @@
 #include <iostream>
 #include <regex>
+#include <fstream>
 #include "LinkedList.h"
 
 using namespace std;
 
 void initializeLinkedList(LinkedList& list) {
     for (int i = 0; i <= 6; i++)
-        list.Add(5);
+        list.Add(0);
 }
 
 void resetCombination(LinkedList& list) {
@@ -54,34 +55,50 @@ void parseCommand(const string& str, string& command, string& subCommand) {
     }
 }
 
-int main() {
-    LinkedList list;
-    initializeLinkedList(list);
+void writeToFile(LinkedList& list, const string& fileName) {
+    ofstream file;
+    file.open(fileName);
+    file << list;
+    file.close();
+}
 
-    string command;
-    string subCommand;
-    int workingValue = 1;
-    while (command != "Q") {
-        if (command == "G") {
-            if (!subCommand.empty()) {
+int main(int argc, char* argv[]) {
+    if (argc == 2) {
+        string fileName = argv[1];
+        LinkedList list;
+        initializeLinkedList(list);
+
+        string command;
+        string subCommand;
+        int workingValue = 1;
+        while (command != "Q") {
+            if (command == "G" && !subCommand.empty()) {
                 if (stoi(subCommand) > 0 && stoi(subCommand) <= 7) {
                     workingValue = stoi(subCommand);
                     subCommand = "";
                 }
+                else {
+                    cout << "Invalid working value! Please try again with 1-7." << endl;
+                }
+            } else if (command == "S" && !subCommand.empty()) {
+                list.ChangeValue(workingValue - 1, stoi(subCommand));
+            } else if (command == "D") {
+                list.ChangeValue(workingValue - 1, 0);
+            } else if (command == "R") {
+                resetCombination(list);
+            } else if (command == "E") {
+                writeToFile(list, fileName);
+                break;
             }
-        }
-        else if (command == "S" && !subCommand.empty()) {
-            list.ChangeValue(workingValue - 1, stoi(subCommand));
-        }
-        else if (command == "D") {
-            list.ChangeValue(workingValue - 1, 0);
-        }
-        else if (command == "R") {
-            resetCombination(list);
-        }
 
-        printCombination(list, workingValue);
-        getline(cin, command);
-        parseCommand(command, command, subCommand);
+            printCombination(list, workingValue);
+            getline(cin, command);
+            parseCommand(command, command, subCommand);
+        }
+    }
+    else {
+        cerr << "Usage: " << argv[0] << " FILENAME" << endl;
+
+        return 1;
     }
 }
